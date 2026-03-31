@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taiwan Tea Store — Case Study | Toby Jiang</title>
+  <meta name="description" content="Full-stack e-commerce platform for a Taiwanese highland tea brand. ECPay integration, triple OAuth, order management system." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Syne', sans-serif; background: #F8F6F1; color: #111; line-height: 1; }
+
+    /* NAV */
+    .pc-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 52px; border-bottom: 1px solid rgba(17,17,17,0.08);
+      background: #F8F6F1; position: sticky; top: 0; z-index: 100;
+    }
+    .pc-logo {
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #111; text-decoration: none;
+    }
+    .pc-back {
+      font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(17,17,17,0.4);
+      text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .pc-back:hover { color: #111; }
+
+    /* HERO */
+    .cs-hero {
+      padding: 72px 52px 64px;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .cs-tag {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px;
+    }
+    .cs-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #C4813A; }
+    .cs-tag-text {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: rgba(17,17,17,0.45); letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .cs-h1 {
+      font-family: 'Playfair Display', serif; font-size: 52px; line-height: 1.08;
+      font-weight: 400; color: #111; margin-bottom: 24px;
+    }
+    .cs-h1 em { font-style: italic; color: #C4813A; }
+    .cs-sub {
+      font-size: 14px; color: rgba(17,17,17,0.5); line-height: 1.8; max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .cs-meta { display: flex; flex-direction: column; gap: 18px; }
+    .cs-meta-item { border-top: 0.5px solid rgba(17,17,17,0.08); padding-top: 14px; }
+    .cs-meta-key {
+      font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(17,17,17,0.35);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;
+    }
+    .cs-meta-val { font-size: 13px; color: #111; line-height: 1.6; }
+    .cs-meta-val a { color: #C4813A; text-decoration: none; }
+    .cs-meta-val a:hover { text-decoration: underline; }
+    .cs-stack { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .cs-stag {
+      font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(17,17,17,0.4);
+      border: 0.5px solid rgba(17,17,17,0.12); padding: 3px 8px; letter-spacing: 0.04em;
+    }
+
+    /* CONTENT */
+    .cs-body { max-width: 720px; margin: 0 auto; padding: 72px 52px; }
+    .cs-section { margin-bottom: 64px; }
+    .cs-section-label {
+      font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(17,17,17,0.35);
+      letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 0.5px solid rgba(17,17,17,0.08);
+    }
+    .cs-section-title {
+      font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400;
+      color: #111; margin-bottom: 16px; line-height: 1.25;
+    }
+    .cs-p {
+      font-size: 14px; color: rgba(17,17,17,0.6); line-height: 1.9; margin-bottom: 16px;
+    }
+    .cs-p:last-child { margin-bottom: 0; }
+
+    /* HARD PARTS */
+    .cs-cards { display: flex; flex-direction: column; gap: 0; }
+    .cs-card {
+      padding: 28px 0; border-bottom: 0.5px solid rgba(17,17,17,0.08);
+      display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start;
+    }
+    .cs-card:last-child { border-bottom: none; }
+    .cs-card-num {
+      font-family: 'Playfair Display', serif; font-size: 36px; color: rgba(17,17,17,0.08);
+      line-height: 1;
+    }
+    .cs-card-title {
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      color: #111; margin-bottom: 10px;
+    }
+    .cs-card-body {
+      font-size: 13px; color: rgba(17,17,17,0.55); line-height: 1.85;
+    }
+
+    /* RESULTS */
+    .cs-results { display: flex; flex-direction: column; gap: 0; }
+    .cs-result-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0; border-bottom: 0.5px solid rgba(17,17,17,0.06);
+    }
+    .cs-result-item:last-child { border-bottom: none; }
+    .cs-result-arrow { color: #C4813A; font-size: 14px; margin-top: 2px; min-width: 14px; }
+    .cs-result-text { font-size: 13px; color: rgba(17,17,17,0.65); line-height: 1.7; }
+
+    /* TECH HIGHLIGHTS */
+    .cs-tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .cs-tech-item {
+      padding: 14px 0; border-bottom: 0.5px solid rgba(17,17,17,0.06);
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: rgba(17,17,17,0.55); line-height: 1.6;
+    }
+    .cs-tech-dot { color: #C4813A; margin-top: 2px; }
+
+    /* CTA */
+    .cs-cta {
+      background: #111; padding: 52px; display: flex;
+      justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+    }
+    .cs-cta-text {
+      font-family: 'Playfair Display', serif; font-size: 24px;
+      font-weight: 400; color: #F8F6F1; line-height: 1.3;
+    }
+    .cs-cta-text em { font-style: italic; color: #C4813A; }
+    .cs-cta-links { display: flex; gap: 14px; flex-wrap: wrap; }
+    .cs-btn-fill {
+      background: #F8F6F1; color: #111; font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 13px 28px;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    .cs-btn-fill:hover { background: #C4813A; color: #F8F6F1; }
+    .cs-btn-line {
+      background: transparent; color: rgba(248,246,241,0.5); font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.08em; padding: 13px 24px;
+      border: 0.5px solid rgba(248,246,241,0.2); text-transform: uppercase;
+      text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s;
+    }
+    .cs-btn-line:hover { border-color: #C4813A; color: #C4813A; }
+
+    /* FOOTER */
+    .pc-foot {
+      padding: 18px 52px; display: flex; justify-content: space-between;
+      align-items: center; border-top: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-foot-c {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: rgba(17,17,17,0.25); letter-spacing: 0.06em;
+    }
+    .pc-foot-links { display: flex; gap: 24px; }
+    .pc-foot-links a {
+      font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(17,17,17,0.35);
+      text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s;
+    }
+    .pc-foot-links a:hover { color: #C4813A; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .pc-nav { padding: 18px 24px; }
+      .cs-hero { grid-template-columns: 1fr; padding: 48px 24px 40px; gap: 32px; }
+      .cs-h1 { font-size: 36px; }
+      .cs-body { padding: 48px 24px; }
+      .cs-card { grid-template-columns: 1fr; gap: 8px; }
+      .cs-card-num { font-size: 24px; }
+      .cs-tech-grid { grid-template-columns: 1fr; }
+      .cs-cta { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+      .pc-foot { padding: 18px 24px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="pc-nav">
+    <a href="/" class="pc-logo">Toby Jiang</a>
+    <a href="/#work" class="pc-back">← Back to Work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div>
+      <div class="cs-tag">
+        <div class="cs-tag-dot"></div>
+        <span class="cs-tag-text">E-Commerce · Full-Stack · Payment</span>
+      </div>
+      <h1 class="cs-h1">Taiwan Tea Store —<br><em>Full-Stack E-commerce</em></h1>
+      <p class="cs-sub">A self-owned e-commerce platform built end-to-end for a Taiwanese highland tea brand, replacing third-party marketplace dependency with full control over storefront, payments, and customer data.</p>
+    </div>
+    <div class="cs-meta">
+      <div class="cs-meta-item">
+        <div class="cs-meta-key">Role</div>
+        <div class="cs-meta-val">Full-Stack Developer &amp; Product Owner</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="cs-meta-key">Live Site</div>
+        <div class="cs-meta-val"><a href="https://taiwantea.store" target="_blank" rel="noopener">taiwantea.store ↗</a></div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="cs-meta-key">Stack</div>
+        <div class="cs-stack">
+          <span class="cs-stag">Next.js 15</span>
+          <span class="cs-stag">React 19</span>
+          <span class="cs-stag">TypeScript</span>
+          <span class="cs-stag">Supabase</span>
+          <span class="cs-stag">ECPay</span>
+          <span class="cs-stag">Tailwind CSS</span>
+          <span class="cs-stag">Vercel</span>
+          <span class="cs-stag">Resend</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <div class="cs-body">
+
+    <!-- CHALLENGE -->
+    <div class="cs-section">
+      <div class="cs-section-label">The Challenge</div>
+      <h2 class="cs-section-title">Escaping the marketplace trap</h2>
+      <p class="cs-p">The client — a family-run highland tea farm in Meishan, Chiayi — had been selling through third-party platforms for years. The problem: high commission fees, no control over customer data, and a brand experience that didn't reflect the quality of their product.</p>
+      <p class="cs-p">The goal was to migrate entirely to a self-owned platform: full control over the storefront, payments, and customer relationships — with zero reliance on external marketplaces.</p>
+    </div>
+
+    <!-- HARD PARTS -->
+    <div class="cs-section">
+      <div class="cs-section-label">The Hard Parts</div>
+      <h2 class="cs-section-title">Three problems most developers can't solve</h2>
+      <div class="cs-cards">
+        <div class="cs-card">
+          <div class="cs-card-num">1</div>
+          <div>
+            <div class="cs-card-title">ECPay Payment Integration</div>
+            <p class="cs-card-body">ECPay is Taiwan's dominant payment gateway, but its developer documentation is sparse and primarily in Chinese. Integrating credit card, ATM transfer, and convenience store payment codes required working through undocumented edge cases — particularly around webhook verification and order status callbacks. This is a skill most international developers simply don't have.</p>
+          </div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-num">2</div>
+          <div>
+            <div class="cs-card-title">Triple OAuth Login</div>
+            <p class="cs-card-body">Taiwanese consumers expect to log in with LINE — not just Google or Facebook. Implementing all three OAuth providers simultaneously, with a unified user identity system backed by Supabase Auth, required careful session management to avoid account duplication across providers.</p>
+          </div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-num">3</div>
+          <div>
+            <div class="cs-card-title">Order Management System</div>
+            <p class="cs-card-body">Beyond the storefront, the platform needed a full admin dashboard: order tracking, status updates, and automated transactional emails via Resend. Building this within Next.js API Routes — without a separate backend service — kept the architecture clean and the deployment simple.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="cs-section">
+      <div class="cs-section-label">The Result</div>
+      <h2 class="cs-section-title">A platform they fully own</h2>
+      <p class="cs-p">The platform launched successfully and is now live at taiwantea.store. It replaced the client's dependency on third-party marketplaces entirely, giving them:</p>
+      <div class="cs-results">
+        <div class="cs-result-item">
+          <span class="cs-result-arrow">→</span>
+          <span class="cs-result-text">Full ownership of their storefront and customer data</span>
+        </div>
+        <div class="cs-result-item">
+          <span class="cs-result-arrow">→</span>
+          <span class="cs-result-text">Lower per-transaction costs vs. marketplace commissions</span>
+        </div>
+        <div class="cs-result-item">
+          <span class="cs-result-arrow">→</span>
+          <span class="cs-result-text">A brand experience that matches the quality of their product</span>
+        </div>
+        <div class="cs-result-item">
+          <span class="cs-result-arrow">→</span>
+          <span class="cs-result-text">A codebase they can maintain and expand independently</span>
+        </div>
+        <div class="cs-result-item">
+          <span class="cs-result-arrow">→</span>
+          <span class="cs-result-text">Infrastructure fully tested and ready to scale</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH HIGHLIGHTS -->
+    <div class="cs-section">
+      <div class="cs-section-label">Tech Highlights</div>
+      <h2 class="cs-section-title">Under the hood</h2>
+      <div class="cs-tech-grid">
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>SSR with Next.js 15 App Router for fast page loads</div>
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>Supabase PostgreSQL for product, order, and user data</div>
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>Row-level security (RLS) policies for data protection</div>
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>Webhook handling for real-time payment status updates</div>
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>Resend for transactional emails (order confirmation)</div>
+        <div class="cs-tech-item"><span class="cs-tech-dot">·</span>Deployed on Vercel with custom domain</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cs-cta">
+    <div class="cs-cta-text">Building something<br>similar? <em>Let's talk.</em></div>
+    <div class="cs-cta-links">
+      <a href="https://taiwantea.store" target="_blank" rel="noopener" class="cs-btn-fill">Visit Live Site ↗</a>
+      <a href="/#contact" class="cs-btn-line">Hire Me →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="pc-foot">
+    <span class="pc-foot-c">© 2026 Toby Jiang</span>
+    <div class="pc-foot-links">
+      <a href="https://github.com/KuanYuJiangTW" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/%E5%AF%AC%E8%82%B2-%E6%B1%9F-b7723010b/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.upwork.com/freelancers/~01a459dbcfe439c6be" target="_blank" rel="noopener">Upwork</a>
+    </div>
+  </footer>
+
+</body>
+</html>
