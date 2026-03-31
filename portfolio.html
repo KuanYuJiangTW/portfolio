@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toby Jiang — Full-Stack E-commerce Developer</title>
+  <meta name="description" content="Full-Stack E-commerce Developer specializing in Next.js, Supabase, and payment integration. I build complete, production-ready web applications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: #F8F6F1;
+      color: #111;
+      line-height: 1;
+    }
+
+    /* ── NAV ── */
+    .pc-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 52px;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+      background: #F8F6F1;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .pc-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111;
+      text-decoration: none;
+    }
+    .pc-nav-r { display: flex; align-items: center; gap: 36px; }
+    .pc-nav-r a {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.4);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .pc-nav-r a:hover { color: #111; }
+    .pc-hire {
+      background: #111;
+      color: #F8F6F1 !important;
+      padding: 9px 22px;
+      font-size: 10px !important;
+      transition: background 0.2s !important;
+    }
+    .pc-hire:hover { background: #C4813A !important; }
+
+    /* ── HERO ── */
+    .pc-hero {
+      display: grid;
+      grid-template-columns: 5fr 3fr;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-hero-main {
+      padding: 72px 52px 64px;
+      border-right: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .pc-hero-tag-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #C4813A;
+    }
+    .pc-hero-tag-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.45);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .pc-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      line-height: 1.08;
+      font-weight: 400;
+      color: #111;
+      margin-bottom: 28px;
+      max-width: 560px;
+    }
+    .pc-h1 em { font-style: italic; color: #C4813A; }
+    .pc-hero-body {
+      font-size: 14px;
+      color: rgba(17,17,17,0.5);
+      line-height: 1.8;
+      font-weight: 400;
+      max-width: 420px;
+      margin-bottom: 44px;
+    }
+    .pc-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .pc-btn-fill {
+      background: #111;
+      color: #F8F6F1;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 14px 32px;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .pc-btn-fill:hover { background: #C4813A; }
+    .pc-btn-line {
+      background: transparent;
+      color: #111;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      padding: 14px 28px;
+      border: 1px solid rgba(17,17,17,0.2);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .pc-btn-line:hover { border-color: #C4813A; color: #C4813A; }
+    .pc-hero-aside {
+      padding: 72px 44px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pc-aside-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(17,17,17,0.45);
+      border-left: 2px solid #C4813A;
+      padding-left: 20px;
+      margin-bottom: 44px;
+    }
+    .pc-metrics { display: flex; flex-direction: column; gap: 20px; }
+    .pc-metric {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 0.5px solid rgba(17,17,17,0.08);
+    }
+    .pc-metric:last-child { border-bottom: none; padding-bottom: 0; }
+    .pc-metric-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      color: #111;
+    }
+    .pc-metric-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.35);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    /* ── MARQUEE ── */
+    .pc-marquee {
+      background: #111;
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .pc-marquee-inner {
+      display: inline-flex;
+      gap: 32px;
+      animation: marquee 22s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .pc-mtag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(248,246,241,0.4);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .pc-mtag-hi { color: rgba(196,129,58,0.85); }
+    .pc-msep { color: rgba(248,246,241,0.15); margin: 0 4px; }
+
+    /* ── WORK ── */
+    .pc-work {
+      padding: 72px 52px;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(17,17,17,0.4);
+    }
+    .pc-sec-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.25);
+    }
+    .pc-proj {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 32px;
+      align-items: start;
+      padding: 36px 0;
+      border-bottom: 0.5px solid rgba(17,17,17,0.07);
+    }
+    .pc-proj:last-child { border-bottom: none; }
+    .pc-proj-idx {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: rgba(17,17,17,0.07);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .pc-proj-cats { display: flex; flex-direction: column; gap: 5px; }
+    .pc-proj-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(17,17,17,0.35);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .pc-proj-badge {
+      display: inline-block;
+      background: rgba(196,129,58,0.1);
+      border: 0.5px solid rgba(196,129,58,0.3);
+      color: #C4813A;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pc-proj-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: #111;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .pc-proj-desc {
+      font-size: 13px;
+      color: rgba(17,17,17,0.5);
+      line-height: 1.75;
+      margin-bottom: 18px;
+      max-width: 460px;
+    }
+    .pc-proj-stack { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pc-stag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(17,17,17,0.4);
+      border: 0.5px solid rgba(17,17,17,0.12);
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+    }
+    .pc-proj-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      padding-top: 4px;
+    }
+    .pc-view-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #111;
+      border: 0.5px solid rgba(17,17,17,0.2);
+      padding: 9px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      background: transparent;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pc-view-btn:hover { border-color: #C4813A; color: #C4813A; }
+    .pc-impact { text-align: right; }
+    .pc-impact-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #C4813A;
+    }
+    .pc-impact-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(17,17,17,0.3);
+      letter-spacing: 0.06em;
+      margin-top: 3px;
+    }
+
+    /* ── SERVICES ── */
+    .pc-svc {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid rgba(17,17,17,0.08);
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-svc-col {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(17,17,17,0.08);
+      transition: background 0.25s;
+    }
+    .pc-svc-col:last-child { border-right: none; }
+    .pc-svc-col:hover { background: rgba(196,129,58,0.03); }
+    .pc-svc-n {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(17,17,17,0.25);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .pc-svc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #111;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .pc-svc-desc {
+      font-size: 12px;
+      color: rgba(17,17,17,0.48);
+      line-height: 1.75;
+    }
+    .pc-svc-bottom {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 0.5px solid rgba(17,17,17,0.08);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .pc-svc-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #111;
+    }
+    .pc-svc-arrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.3);
+    }
+
+    /* ── WHY ── */
+    .pc-why {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-why-l {
+      padding: 60px 52px;
+      border-right: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-why-r { padding: 60px 52px; background: #111; }
+    .pc-why-head {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.35);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .pc-why-head-inv { color: rgba(248,246,241,0.3); }
+    .pc-why-list { display: flex; flex-direction: column; gap: 0; }
+    .pc-why-item {
+      padding: 18px 0;
+      border-bottom: 0.5px solid rgba(17,17,17,0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .pc-why-item:last-child { border-bottom: none; }
+    .pc-why-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #C4813A;
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+      min-width: 20px;
+    }
+    .pc-why-text { font-size: 13px; color: rgba(17,17,17,0.6); line-height: 1.7; }
+    .pc-why-text strong { color: #111; font-weight: 500; }
+    .pc-why-item-inv { border-bottom-color: rgba(248,246,241,0.07); }
+    .pc-why-num-inv { color: rgba(196,129,58,0.7); }
+    .pc-why-text-inv { color: rgba(248,246,241,0.45); }
+    .pc-why-text-inv strong { color: #F8F6F1; }
+    .pc-why-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: #F8F6F1;
+      margin-bottom: 32px;
+      line-height: 1.25;
+    }
+    .pc-why-title em { font-style: italic; color: #C4813A; }
+
+    /* ── CONTACT ── */
+    .pc-contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .pc-contact-l {
+      padding: 64px 52px;
+      border-right: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-contact-r { padding: 64px 52px; background: #F2EDE3; }
+    .pc-contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 400;
+      color: #111;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .pc-contact-title em { font-style: italic; color: #C4813A; }
+    .pc-contact-sub {
+      font-size: 13px;
+      color: rgba(17,17,17,0.45);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .pc-avail {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #5a7a5a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .pc-avail-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #5a7a5a;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .pc-form { display: flex; flex-direction: column; gap: 12px; }
+    .pc-inp {
+      background: #fff;
+      border: 0.5px solid rgba(17,17,17,0.15);
+      padding: 13px 16px;
+      color: #111;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .pc-inp:focus { border-color: #C4813A; }
+    .pc-inp::placeholder { color: rgba(17,17,17,0.3); }
+    .pc-sub {
+      background: #111;
+      color: #F8F6F1;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 15px;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 6px;
+      transition: background 0.2s;
+    }
+    .pc-sub:hover { background: #C4813A; }
+
+    /* ── FOOTER ── */
+    .pc-foot {
+      padding: 18px 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(17,17,17,0.08);
+    }
+    .pc-foot-c {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.25);
+      letter-spacing: 0.06em;
+    }
+    .pc-foot-links { display: flex; gap: 24px; }
+    .pc-foot-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: rgba(17,17,17,0.35);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .pc-foot-links a:hover { color: #C4813A; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .pc-nav { padding: 18px 24px; }
+      .pc-nav-r { gap: 20px; }
+      .pc-hero { grid-template-columns: 1fr; }
+      .pc-hero-main { padding: 48px 24px 40px; border-right: none; border-bottom: 1px solid rgba(17,17,17,0.08); }
+      .pc-h1 { font-size: 40px; }
+      .pc-hero-aside { padding: 40px 24px; }
+      .pc-metrics { flex-direction: row; flex-wrap: wrap; gap: 16px; }
+      .pc-metric { flex: 1; min-width: 100px; flex-direction: column; gap: 6px; }
+      .pc-metric-key { text-align: left; }
+      .pc-work { padding: 48px 24px; }
+      .pc-proj { grid-template-columns: 1fr; gap: 16px; }
+      .pc-proj-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+      .pc-svc { grid-template-columns: 1fr; }
+      .pc-svc-col { border-right: none; border-bottom: 1px solid rgba(17,17,17,0.08); }
+      .pc-svc-col:last-child { border-bottom: none; }
+      .pc-why { grid-template-columns: 1fr; }
+      .pc-why-l { border-right: none; border-bottom: 1px solid rgba(17,17,17,0.08); padding: 40px 24px; }
+      .pc-why-r { padding: 40px 24px; }
+      .pc-contact { grid-template-columns: 1fr; }
+      .pc-contact-l { border-right: none; border-bottom: 1px solid rgba(17,17,17,0.08); padding: 48px 24px; }
+      .pc-contact-r { padding: 48px 24px; }
+      .pc-contact-title { font-size: 30px; }
+      .pc-foot { padding: 18px 24px; flex-direction: column; gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .pc-nav-r a:not(.pc-hire) { display: none; }
+      .pc-h1 { font-size: 32px; }
+      .pc-why-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="pc-nav">
+    <a href="#" class="pc-logo">Toby Jiang</a>
+    <div class="pc-nav-r">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#why">Process</a>
+      <a href="#contact" class="pc-hire">Hire Me ↗</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="pc-hero">
+    <div class="pc-hero-main">
+      <div class="pc-hero-tag">
+        <div class="pc-hero-tag-dot"></div>
+        <span class="pc-hero-tag-text">E-commerce · Full-Stack Developer</span>
+      </div>
+      <h1 class="pc-h1">I build e-commerce<br>that <em>actually</em> sells</h1>
+      <p class="pc-hero-body">I don't just write code — I build complete, revenue-ready web products. Payment integration, authentication, admin dashboards, and deployment included. You get a finished product, not a starter template.</p>
+      <div class="pc-cta-row">
+        <a href="#work" class="pc-btn-fill">See My Work</a>
+        <a href="#contact" class="pc-btn-line">Book a Free Call</a>
+      </div>
+    </div>
+    <div class="pc-hero-aside">
+      <p class="pc-aside-quote">"Most developers hand you code.<br>I hand you a product that works."</p>
+      <div class="pc-metrics">
+        <div class="pc-metric">
+          <span class="pc-metric-val">3</span>
+          <span class="pc-metric-key">OAuth Providers<br>Integrated</span>
+        </div>
+        <div class="pc-metric">
+          <span class="pc-metric-val">100%</span>
+          <span class="pc-metric-key">Projects<br>Live &amp; Deployed</span>
+        </div>
+        <div class="pc-metric">
+          <span class="pc-metric-val">$0</span>
+          <span class="pc-metric-key">Downtime on<br>Production</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH MARQUEE -->
+  <div class="pc-marquee">
+    <div class="pc-marquee-inner" aria-hidden="true">
+      <span class="pc-mtag pc-mtag-hi">Next.js 15</span><span class="pc-msep">·</span>
+      <span class="pc-mtag pc-mtag-hi">React 19</span><span class="pc-msep">·</span>
+      <span class="pc-mtag pc-mtag-hi">TypeScript</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Supabase</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">PostgreSQL</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Tailwind CSS</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">ECPay · Payment Integration</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Vercel</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">OAuth</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">REST API</span><span class="pc-msep">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="pc-mtag pc-mtag-hi">Next.js 15</span><span class="pc-msep">·</span>
+      <span class="pc-mtag pc-mtag-hi">React 19</span><span class="pc-msep">·</span>
+      <span class="pc-mtag pc-mtag-hi">TypeScript</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Supabase</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">PostgreSQL</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Tailwind CSS</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">ECPay · Payment Integration</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">Vercel</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">OAuth</span><span class="pc-msep">·</span>
+      <span class="pc-mtag">REST API</span><span class="pc-msep">·</span>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <section class="pc-work" id="work">
+    <div class="pc-sec-head">
+      <span class="pc-sec-title">Selected Work</span>
+      <span class="pc-sec-count">02 Projects</span>
+    </div>
+
+    <!-- Project 01 -->
+    <div class="pc-proj">
+      <div class="pc-proj-left">
+        <div class="pc-proj-idx">01</div>
+        <div class="pc-proj-cats">
+          <span class="pc-proj-cat">E-Commerce</span>
+          <span class="pc-proj-cat">Full-Stack</span>
+          <span class="pc-proj-cat">Payment</span>
+        </div>
+      </div>
+      <div class="pc-proj-center">
+        <div class="pc-proj-badge">★ Featured</div>
+        <div class="pc-proj-name">Taiwan Tea Store</div>
+        <p class="pc-proj-desc">A production e-commerce platform built end-to-end for a Taiwanese highland tea brand. Includes ECPay payment gateway (credit card, ATM, convenience store), triple OAuth login (Google, LINE, Facebook), automated order confirmation emails, and a full admin dashboard — all live with real transactions.</p>
+        <div class="pc-proj-stack">
+          <span class="pc-stag">Next.js 15</span>
+          <span class="pc-stag">Supabase</span>
+          <span class="pc-stag">ECPay</span>
+          <span class="pc-stag">OAuth × 3</span>
+          <span class="pc-stag">Resend</span>
+          <span class="pc-stag">Vercel</span>
+          <span class="pc-stag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="pc-proj-right">
+        <a href="#" class="pc-view-btn">View Project ↗</a>
+        <div class="pc-impact">
+          <div class="pc-impact-val">Live</div>
+          <div class="pc-impact-key">Production Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 02 -->
+    <div class="pc-proj">
+      <div class="pc-proj-left">
+        <div class="pc-proj-idx">02</div>
+        <div class="pc-proj-cats">
+          <span class="pc-proj-cat">Dashboard</span>
+          <span class="pc-proj-cat">MVC</span>
+          <span class="pc-proj-cat">Admin</span>
+        </div>
+      </div>
+      <div class="pc-proj-center">
+        <div class="pc-proj-name">Community Management System</div>
+        <p class="pc-proj-desc">A full-featured admin web application for community management. Handles resident records, facility bookings, announcements, and role-based access control — built on a clean MVC architecture for easy maintenance and future scaling.</p>
+        <div class="pc-proj-stack">
+          <span class="pc-stag">MVC</span>
+          <span class="pc-stag">TypeScript</span>
+          <span class="pc-stag">RBAC</span>
+          <span class="pc-stag">CRUD</span>
+          <span class="pc-stag">Dashboard UI</span>
+        </div>
+      </div>
+      <div class="pc-proj-right">
+        <a href="#" class="pc-view-btn">View Project ↗</a>
+        <div class="pc-impact">
+          <div class="pc-impact-val">RBAC</div>
+          <div class="pc-impact-key">Multi-role System</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="pc-svc" id="services">
+    <div class="pc-svc-col">
+      <div class="pc-svc-n">Service 01</div>
+      <div class="pc-svc-name">E-Commerce Platform</div>
+      <p class="pc-svc-desc">Complete online store with payment gateway, inventory, order management, customer auth, and transactional emails. Built to scale.</p>
+      <div class="pc-svc-bottom">
+        <span class="pc-svc-price">From $2,000</span>
+        <span class="pc-svc-arrow">↗</span>
+      </div>
+    </div>
+    <div class="pc-svc-col">
+      <div class="pc-svc-n">Service 02</div>
+      <div class="pc-svc-name">Landing Page</div>
+      <p class="pc-svc-desc">High-converting marketing pages — animations, lead forms, analytics integration, mobile-first. Delivered in 5–7 days.</p>
+      <div class="pc-svc-bottom">
+        <span class="pc-svc-price">From $500</span>
+        <span class="pc-svc-arrow">↗</span>
+      </div>
+    </div>
+    <div class="pc-svc-col">
+      <div class="pc-svc-n">Service 03</div>
+      <div class="pc-svc-name">Custom Web App</div>
+      <p class="pc-svc-desc">SaaS tools, internal dashboards, or business systems. Clean architecture, full deployment, documentation included.</p>
+      <div class="pc-svc-bottom">
+        <span class="pc-svc-price">From $3,000</span>
+        <span class="pc-svc-arrow">↗</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="pc-why" id="why">
+    <div class="pc-why-l">
+      <div class="pc-why-head">Why clients choose me</div>
+      <div class="pc-why-list">
+        <div class="pc-why-item">
+          <span class="pc-why-num">01</span>
+          <span class="pc-why-text"><strong>Full delivery, not half a product.</strong> I handle everything from design to deployment — you don't need to manage 3 different contractors.</span>
+        </div>
+        <div class="pc-why-item">
+          <span class="pc-why-num">02</span>
+          <span class="pc-why-text"><strong>Payment integration expertise.</strong> I've shipped real payment systems and know the edge cases that break at checkout.</span>
+        </div>
+        <div class="pc-why-item">
+          <span class="pc-why-num">03</span>
+          <span class="pc-why-text"><strong>Modern, maintained code.</strong> Next.js 15 + TypeScript means your codebase is clean, typed, and easy for any developer to continue after launch.</span>
+        </div>
+        <div class="pc-why-item">
+          <span class="pc-why-num">04</span>
+          <span class="pc-why-text"><strong>Clear English communication.</strong> Honest timelines, proactive updates, and no surprises — timezone-friendly async workflow.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pc-why-r">
+      <h3 class="pc-why-title">Not just a developer —<br><em>a product partner</em></h3>
+      <div class="pc-why-head pc-why-head-inv" style="margin-top:0;">What this means for you</div>
+      <div class="pc-why-list">
+        <div class="pc-why-item pc-why-item-inv">
+          <span class="pc-why-num pc-why-num-inv">→</span>
+          <span class="pc-why-text pc-why-text-inv"><strong>Fewer revisions.</strong> I ask the right questions upfront, so the first build is close to final.</span>
+        </div>
+        <div class="pc-why-item pc-why-item-inv">
+          <span class="pc-why-num pc-why-num-inv">→</span>
+          <span class="pc-why-text pc-why-text-inv"><strong>Faster launch.</strong> One person owns the whole project — no handoff delays between teams.</span>
+        </div>
+        <div class="pc-why-item pc-why-item-inv">
+          <span class="pc-why-num pc-why-num-inv">→</span>
+          <span class="pc-why-text pc-why-text-inv"><strong>Long-term support.</strong> I build things I'm proud of. That means I'm still around after launch.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="pc-contact" id="contact">
+    <div class="pc-contact-l">
+      <h2 class="pc-contact-title">Start your<br><em>next project</em><br>the right way</h2>
+      <p class="pc-contact-sub">Let's talk about your goals before we talk about code. A 30-minute call is enough to know if we're a good fit — no commitment required.</p>
+      <div class="pc-avail">
+        <div class="pc-avail-dot"></div>
+        Available for new projects
+      </div>
+    </div>
+    <div class="pc-contact-r">
+      <form class="pc-form" action="#" method="POST">
+        <input class="pc-inp" type="text" name="name" placeholder="Your name" required />
+        <input class="pc-inp" type="email" name="email" placeholder="Email address" required />
+        <input class="pc-inp" type="text" name="budget" placeholder="Project budget (e.g. $2,000–$5,000)" />
+        <textarea class="pc-inp" name="message" rows="4" placeholder="Describe your project..." style="resize:none;" required></textarea>
+        <button type="submit" class="pc-sub">Send Message →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="pc-foot">
+    <span class="pc-foot-c">© 2026 Toby Jiang</span>
+    <div class="pc-foot-links">
+      <a href="#" target="_blank" rel="noopener">GitHub</a>
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Upwork</a>
+    </div>
+  </footer>
+
+</body>
+</html>
